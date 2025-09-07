@@ -2,44 +2,11 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import appLogo from "/favicon.svg";
 import PWABadge from "./PWABadge.tsx";
+import InstallPWA from "./InstallPWA";
 import "./App.css";
-interface BeforeInstallPromptEvent extends Event {
-    prompt: () => Promise<void>;
-    userChoice: Promise<{
-        outcome: "accepted" | "dismissed";
-        platform: string;
-    }>;
-}
 
-function useBeforeInstallPrompt() {
-    const [event, setEvent] = useState<BeforeInstallPromptEvent | null>(null);
-
-    if (typeof window !== "undefined" && !event) {
-        // Attach the listener only once when hook is first called
-        window.addEventListener("beforeinstallprompt", (e: Event) => {
-            e.preventDefault();
-            setEvent(e as BeforeInstallPromptEvent);
-        });
-    }
-
-    return event;
-}
 function App() {
     const [count, setCount] = useState(0);
-    const deferredPrompt = useBeforeInstallPrompt();
-
-    const handleInstall = async () => {
-        if (!deferredPrompt) return;
-
-        deferredPrompt.prompt();
-        const choice = await deferredPrompt.userChoice;
-
-        if (choice.outcome === "accepted") {
-            console.log("✅ Installed");
-        } else {
-            console.log("❌ Dismissed");
-        }
-    };
 
     return (
         <>
@@ -61,10 +28,11 @@ function App() {
                     count is {count}
                 </button>
                 <p>
-                    <code>src/App.tsx</code> and save to test HMR
+                    Edit <code>src/App.tsx</code> and save to test HMR
                 </p>
+                <InstallPWA />
             </div>
-            <p className="read-the-docs" onClick={handleInstall}>
+            <p className="read-the-docs">
                 Click on the Vite and React logos to learn more
             </p>
             <PWABadge />

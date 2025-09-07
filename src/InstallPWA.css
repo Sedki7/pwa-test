@@ -1,0 +1,21 @@
+.install-button {
+    background-color: #646cff;
+    color: white;
+    border: none;
+    padding: 0.6em 1.2em;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.25s;
+}
+
+.install-button:hover {
+    background-color: #747bff;
+}
+
+.install-button:focus,
+.install-button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+}
